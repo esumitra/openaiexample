@@ -4,8 +4,10 @@ import zio.{Console, ZIO, ZIOAppDefault}
 import zio.openai._
 import zio.openai.model.CreateCompletionRequest.Prompt
 import zio.openai.model.Temperature
+import com.example.openai.config.CompletionsConfig
+import com.typesafe.scalalogging.{LazyLogging}
 
-object Quickstart extends ZIOAppDefault {
+object Quickstart extends ZIOAppDefault with LazyLogging {
 
   def generatePrompt(animal: String): Prompt =
     Prompt.String {
@@ -19,11 +21,11 @@ object Quickstart extends ZIOAppDefault {
          |Names:""".stripMargin
     }
 
-  def loop =
+  def loop(conf: CompletionsConfig): ZIO[Completions, Object, Unit] =
     for {
       animal <- Console.readLine("Animal: ")
       result <- Completions.createCompletion(
-        model = "text-davinci-003",
+        model = conf.model,
         prompt = generatePrompt(animal),
         temperature = Temperature(0.6)
       )
@@ -31,5 +33,7 @@ object Quickstart extends ZIOAppDefault {
     } yield ()
 
   override def run =
-    loop.forever.provide(Completions.default)
+    val conf = CompletionsConfig.conf
+    logger.info(s"using parameters: model ${conf.model}")
+    loop(conf).forever.provide(Completions.default)
 }
