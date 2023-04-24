@@ -3,8 +3,8 @@ import sbt._
 object Dependencies {
 
   val circeVersion = "0.14.1"
-  val pureconfigVersion = "0.17.2"
-  val catsVersion = "2.7.0" // "2.3.0-M1"
+  val pureconfigVersion = "0.17.3"
+  val catsVersion = "2.7.0"
   val sttpVersion = "3.3.18"
   val loggingVersion = "3.9.4"
   val scalaTestVersion = "3.2.10"
@@ -27,7 +27,7 @@ object Dependencies {
     "io.circe" %% "circe-parser" % circeVersion,
 
     // support for typesafe configuration
-    "com.github.pureconfig" % "pureconfig_2.13" % pureconfigVersion, // use 2.13 version as is
+    "com.github.pureconfig" %% "pureconfig-core" % pureconfigVersion,
     
     // logging
     "com.typesafe.scala-logging" %% "scala-logging" % loggingVersion,

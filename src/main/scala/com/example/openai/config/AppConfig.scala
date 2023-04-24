@@ -5,7 +5,8 @@
 package com.example.openai.config
 
 import pureconfig._
-import pureconfig.generic.auto._
+import pureconfig.generic.derivation.default._
+
 import scala.reflect.ClassTag
 
 object ConfigUtils:
